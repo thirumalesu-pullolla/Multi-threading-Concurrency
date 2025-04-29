@@ -1,0 +1,81 @@
+What is a Daemon Thread?
+📘 Basic Definition:
+A Daemon Thread is a background thread in Java that provides services to user threads. It runs in the background and does not prevent the JVM from exiting when all user threads are done.
+
+🛺 Real-Life Analogy:
+Imagine you're using Zomato to order food:
+
+You (the customer) are a user thread — actively doing something (placing order).
+
+The delivery tracker running in the background is a daemon thread — it helps you, but if you close the app (user leaves), it also stops.
+
+🔍 Characteristics of Daemon Threads
+
+Feature	Description
+Purpose	Background tasks like cleanup, logging, monitoring
+JVM Behavior	JVM exits when only daemon threads are running
+Lifespan	Ends when the last user thread ends
+Examples	Garbage Collection, Finalizer, Heartbeat monitor, Log flushing
+Can be Created?	Yes, by calling setDaemon(true) before start()
+Default Type	Threads are user by default
+👨‍💻 Code Example:
+ 
+class MyDaemon extends Thread {
+    public void run() {
+        while (true) {
+            System.out.println("Daemon thread running...");
+            try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        }
+    }
+}
+
+public class Demo {
+    public static void main(String[] args) {
+        MyDaemon t = new MyDaemon();
+        t.setDaemon(true);  // Set before start
+        t.start();
+
+        System.out.println("Main (user) thread ending...");
+    }
+}
+🧾 Output:
+ 
+Daemon thread running...
+Daemon thread running...
+Main (user) thread ending...
+➡️ JVM exits after the main thread ends — daemon is stopped abruptly.
+
+🤖 Daemon Threads in Indian Apps
+
+App	Daemon-Like Feature	Purpose
+Zomato	Delivery status tracker	Helps user threads, but not essential
+IRCTC	Background session timeout checker	Ends when user logs out or exits
+Paytm	Notification pinger	Pings for new cashback offers etc.
+⚠️ Important Rules
+setDaemon(true) must be called before start().
+Otherwise → IllegalThreadStateException
+
+Daemon thread can create user threads, but not the other way around automatically.
+
+JVM does not wait for daemon threads to complete.
+
+✅ When to Use Daemon Threads?
+Tasks that don’t need to finish before program ends.
+
+Logging systems.
+
+Cleanup services.
+
+Monitoring.
+
+❌ When Not to Use
+Business-critical processes.
+
+Any task that must complete (e.g., file upload).
+
+💡 Summary
+Think of daemon threads as assistants — they support, not lead.
+
+JVM shuts down only when all user threads finish.
+
+They are great for non-essential background work.
