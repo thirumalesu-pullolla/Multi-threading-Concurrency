@@ -1,0 +1,27 @@
+✅ What is Thread Priority?
+    Each thread in Java is assigned a priority (an integer between 1 and 10).
+    
+    Higher priority means the thread gets more preference by the CPU (not guaranteed, depends on OS scheduler).
+    
+    Default priority = 5
+
+🔢 Priority Constants from Thread Class:
+ 
+    Thread.MIN_PRIORITY   // 1
+    Thread.NORM_PRIORITY  // 5
+    Thread.MAX_PRIORITY   // 10
+
+✅ Setting and Getting Priority
+ 
+    Thread t = new Thread();
+    t.setPriority(8);     // sets priority
+    int p = t.getPriority(); // gets priority
+
+🛵 Real-World Analogy: Zomato Delivery
+    Zomato Gold users → High priority → Get faster delivery
+    
+    Normal users → Medium priority
+    
+    Free users → Lower priority → May wait longer
+    
+    Similarly, CPU may prefer higher-priority threads for execution.
